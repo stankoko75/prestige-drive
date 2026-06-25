@@ -31,7 +31,7 @@ export default function HomePage() {
             onClick={() => setVideoEnded(true)}
             className="absolute bottom-10 right-10 flex items-center gap-2 bg-transparent border-none cursor-pointer text-[rgba(245,240,232,0.45)] hover:text-[#C9A84C] transition-colors"
           >
-            <span className="text-[10px] tracking-[3px] uppercase font-semibold">Passer l'intro</span>
+            <span className="text-[10px] tracking-[3px] uppercase font-semibold">Passer l&apos;intro</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>

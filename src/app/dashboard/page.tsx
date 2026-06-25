@@ -323,7 +323,7 @@ export default function DashboardPage() {
                 Réserver un véhicule
               </p>
               <p className="text-[13px] text-[#9A9080] leading-[1.8] mb-5">
-                Découvrez notre flotte d'exception et réservez le véhicule idéal pour votre prochaine expérience.
+                Découvrez notre flotte d&apos;exception et réservez le véhicule idéal pour votre prochaine expérience.
               </p>
               <Link
                 href="/flotte"
