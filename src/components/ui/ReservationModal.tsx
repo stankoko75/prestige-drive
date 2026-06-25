@@ -53,9 +53,9 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
         onClick={(e) => e.stopPropagation()}
       >
         {/* ─── HEADER ─── */}
-        <div className="flex items-center justify-between px-8 py-5 border-b border-[rgba(201,168,76,0.15)]">
+        <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 md:py-5 border-b border-[rgba(201,168,76,0.15)]">
           <div className="w-8" />
-          <p className="text-[13px] tracking-[4px] font-semibold text-[#C9A84C] uppercase">
+          <p className="text-[11px] sm:text-[13px] tracking-[2px] sm:tracking-[4px] font-semibold text-[#C9A84C] uppercase">
             Réserver ce véhicule
           </p>
           <button
@@ -69,13 +69,13 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
         </div>
 
         {/* ─── CORPS ─── */}
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-col md:flex-row flex-1 md:overflow-hidden">
 
           {/* COLONNE GAUCHE */}
-          <div className="w-[380px] flex-shrink-0 border-r border-[rgba(201,168,76,0.12)] flex flex-col">
+          <div className="w-full md:w-[380px] md:flex-shrink-0 border-b md:border-b-0 md:border-r border-[rgba(201,168,76,0.12)] flex flex-col">
 
             {/* Image avec navigation */}
-            <div className="relative h-[210px] bg-[#111] overflow-hidden flex-shrink-0">
+            <div className="relative h-[180px] sm:h-[210px] bg-[#111] overflow-hidden flex-shrink-0">
               <Image
                 src={images[imgIdx]}
                 alt={car.model}
@@ -176,14 +176,14 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
           </div>
 
           {/* COLONNE DROITE */}
-          <div className="flex-1 flex flex-col p-6 gap-5 overflow-y-auto">
+          <div className="flex-1 flex flex-col p-4 sm:p-6 gap-4 sm:gap-5 md:overflow-y-auto">
 
             {/* Dates */}
             <div>
               <p className="text-[9px] tracking-[3px] text-[#9A9080] font-semibold uppercase mb-3">
                 Sélectionnez vos dates
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <div className="flex-1 flex flex-col gap-1.5">
                   <p className="text-[8px] tracking-[2px] text-[#9A9080] uppercase font-medium">Date de début</p>
                   <div className="relative">
@@ -202,7 +202,7 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
                   )}
                 </div>
 
-                <svg className="w-5 h-5 text-[#C9A84C] flex-shrink-0 mt-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="hidden sm:block w-5 h-5 text-[#C9A84C] flex-shrink-0 mt-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
 
@@ -228,7 +228,7 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
             </div>
 
             {/* Lieu + KM */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div className="flex flex-col gap-1.5">
                 <p className="text-[8px] tracking-[2px] text-[#9A9080] uppercase font-medium">Lieu de livraison</p>
                 <div className="relative">
@@ -345,7 +345,7 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
 
         {/* ─── FOOTER ─── */}
         <div className="border-t border-[rgba(201,168,76,0.15)] bg-[#0A0A0A]">
-          <div className="flex items-center px-8 py-4 gap-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center px-4 sm:px-6 md:px-8 py-4 gap-3 sm:gap-6">
             {/* Récapitulatif */}
             <div className="flex-shrink-0">
               <p className="text-[8px] tracking-[2px] text-[#9A9080] uppercase font-semibold">Récapitulatif</p>
@@ -354,12 +354,12 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
               </p>
             </div>
 
-            <div className="w-px h-10 bg-[rgba(201,168,76,0.15)]" />
+            <div className="hidden sm:block w-px h-10 bg-[rgba(201,168,76,0.15)]" />
 
             {/* Total */}
             <div className="flex-1 text-center">
               <p className="text-[8px] tracking-[2px] text-[#9A9080] uppercase font-semibold mb-0.5">Total estimé</p>
-              <p className="font-serif text-[28px] font-light text-[#C9A84C] leading-none">
+              <p className="font-serif text-[24px] sm:text-[28px] font-light text-[#C9A84C] leading-none">
                 {total > 0 ? `${total.toLocaleString("fr-FR")} €` : "—"}
               </p>
               {total > 0 && (
@@ -369,17 +369,17 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
               )}
             </div>
 
-            <div className="w-px h-10 bg-[rgba(201,168,76,0.15)]" />
+            <div className="hidden sm:block w-px h-10 bg-[rgba(201,168,76,0.15)]" />
 
             {/* Sécurisé + bouton */}
-            <div className="flex items-center gap-4 flex-shrink-0">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 flex-shrink-0">
               <div className="flex items-center gap-2 text-[#9A9080]">
-                <svg className="w-4 h-4 text-[#C9A84C]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-[#C9A84C] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                 </svg>
                 <span className="text-[9px] tracking-[1px] uppercase">Paiement 100% sécurisé</span>
               </div>
-              <button className="flex items-center gap-2 bg-[#C9A84C] text-black px-8 py-3.5 text-[10px] tracking-[3px] font-bold uppercase hover:bg-[#E8C97A] transition-colors border-none cursor-pointer flex-shrink-0">
+              <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#C9A84C] text-black px-8 py-3.5 text-[10px] tracking-[3px] font-bold uppercase hover:bg-[#E8C97A] transition-colors border-none cursor-pointer flex-shrink-0">
                 Continuer
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -389,7 +389,7 @@ export default function ReservationModal({ car, isOpen, onClose }: ReservationMo
           </div>
 
           {/* CGV */}
-          <div className="px-8 pb-4">
+          <div className="px-4 sm:px-6 md:px-8 pb-4">
             <p className="text-center text-[9px] text-[#9A9080] tracking-[0.5px]">
               En confirmant cette réservation, vous acceptez nos{" "}
               <span className="text-[#C9A84C] underline cursor-pointer hover:text-[#E8C97A] transition-colors">

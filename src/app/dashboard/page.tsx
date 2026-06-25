@@ -103,19 +103,44 @@ const shortcuts = [
 ];
 
 export default function DashboardPage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="flex min-h-screen bg-[#0A0A0A]">
+      {/* ─── BACKDROP (mobile drawer) ─── */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* ─── SIDEBAR ─── */}
-      <aside className="fixed left-0 top-0 bottom-0 w-[220px] z-50 bg-[rgba(10,10,10,0.97)] border-r border-[rgba(201,168,76,0.15)] flex flex-col">
+      <aside
+        className={`fixed left-0 top-0 bottom-0 w-[220px] z-50 bg-[rgba(10,10,10,0.97)] border-r border-[rgba(201,168,76,0.15)] flex flex-col transform transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
         {/* Logo */}
-        <div className="flex items-center gap-3 px-6 py-6 border-b border-[rgba(201,168,76,0.12)]">
-          <div className="w-9 h-9 border border-[#C9A84C] flex items-center justify-center text-[#C9A84C] font-serif text-lg font-semibold">
-            P
+        <div className="flex items-center justify-between px-6 py-6 border-b border-[rgba(201,168,76,0.12)]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 border border-[#C9A84C] flex items-center justify-center text-[#C9A84C] font-serif text-lg font-semibold">
+              P
+            </div>
+            <div className="flex flex-col leading-none">
+              <span className="font-sans font-semibold text-[12px] tracking-[3px] text-[#F5F0E8] uppercase">Prestige</span>
+              <span className="text-[9px] tracking-[3px] text-[#C9A84C] font-light uppercase">Drive</span>
+            </div>
           </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-sans font-semibold text-[12px] tracking-[3px] text-[#F5F0E8] uppercase">Prestige</span>
-            <span className="text-[9px] tracking-[3px] text-[#C9A84C] font-light uppercase">Drive</span>
-          </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Fermer le menu"
+            className="md:hidden text-[#9A9080] hover:text-[#F5F0E8] bg-transparent border-none cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
         {/* Nav */}
@@ -124,6 +149,7 @@ export default function DashboardPage() {
             <Link
               key={item.label}
               href={item.href}
+              onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-6 py-3 text-[11px] tracking-[1.5px] font-medium no-underline transition-all border-l-2 ${
                 item.active
                   ? "text-[#C9A84C] border-l-[#C9A84C] bg-[rgba(201,168,76,0.08)]"
@@ -142,6 +168,7 @@ export default function DashboardPage() {
             <Link
               key={item.label}
               href={item.href}
+              onClick={() => setSidebarOpen(false)}
               className="flex items-center gap-2.5 text-[#9A9080] text-[11px] tracking-[1.5px] no-underline py-2 hover:text-[#F5F0E8] transition-colors"
             >
               {item.icon}
@@ -152,9 +179,9 @@ export default function DashboardPage() {
       </aside>
 
       {/* ─── MAIN CONTENT ─── */}
-      <div className="ml-[220px] flex-1 relative">
+      <div className="ml-0 md:ml-[220px] flex-1 relative">
         {/* BG */}
-        <div className="fixed top-0 left-[220px] right-0 bottom-0 z-0">
+        <div className="fixed top-0 left-0 md:left-[220px] right-0 bottom-0 z-0">
           <Image
             src="/images/dashboard-bg.png"
             alt=""
@@ -165,38 +192,49 @@ export default function DashboardPage() {
         </div>
 
         {/* Top bar */}
-        <div className="fixed top-0 left-[220px] right-0 z-40 flex justify-end items-center gap-5 px-12 py-5 bg-[rgba(10,10,10,0.6)] backdrop-blur-sm border-b border-[rgba(201,168,76,0.08)]">
-          <button className="text-[#9A9080] hover:text-[#C9A84C] transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+        <div className="fixed top-0 left-0 md:left-[220px] right-0 z-30 flex justify-between md:justify-end items-center gap-3 sm:gap-5 px-4 sm:px-6 md:px-12 py-4 md:py-5 bg-[rgba(10,10,10,0.6)] backdrop-blur-sm border-b border-[rgba(201,168,76,0.08)]">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Ouvrir le menu"
+            className="md:hidden text-[#F5F0E8] bg-transparent border-none cursor-pointer"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
             </svg>
           </button>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#C9A84C] flex items-center justify-center text-black text-[11px] font-bold">
-              AD
+          <div className="flex items-center gap-3 sm:gap-5">
+            <button className="text-[#9A9080] hover:text-[#C9A84C] transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+              </svg>
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#C9A84C] flex items-center justify-center text-black text-[11px] font-bold flex-shrink-0">
+                AD
+              </div>
+              <span className="hidden sm:inline text-[#F5F0E8] text-[12px] tracking-[1px] font-medium">Arthur D.</span>
+              <svg className="hidden sm:block w-4 h-4 text-[#9A9080]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
             </div>
-            <span className="text-[#F5F0E8] text-[12px] tracking-[1px] font-medium">Arthur D.</span>
-            <svg className="w-4 h-4 text-[#9A9080]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
           </div>
         </div>
 
         {/* Dashboard content */}
-        <div className="relative z-10 pt-24 px-12 pb-12">
+        <div className="relative z-10 pt-20 sm:pt-24 px-4 sm:px-6 md:px-12 pb-12">
           {/* Welcome */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <div className="w-8 h-px bg-[#C9A84C] mb-4" />
-            <h1 className="font-serif text-[40px] font-light text-[#F5F0E8]">
+            <h1 className="font-serif text-[28px] sm:text-[34px] md:text-[40px] font-light text-[#F5F0E8]">
               Bonjour Arthur,
             </h1>
-            <p className="text-[13px] text-[#9A9080] tracking-[1px] mt-1">
+            <p className="text-[12px] sm:text-[13px] text-[#9A9080] tracking-[1px] mt-1">
               Prêt pour votre prochaine expérience ?
             </p>
           </div>
 
           {/* Stats row */}
-          <div className="grid grid-cols-4 gap-3 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 sm:mb-8">
             {[
               { val: "2", label: "Réservations à venir", sub: "Prochaine : 24 Mai 2024", IconEl: <CalendarIcon /> },
               { val: "1", label: "Contrat actif", sub: "Audi RS6", IconEl: <DocIcon /> },
@@ -205,16 +243,16 @@ export default function DashboardPage() {
             ].map((s) => (
               <div
                 key={s.label}
-                className="bg-[rgba(255,255,255,0.04)] border border-[rgba(201,168,76,0.12)] p-6"
+                className="bg-[rgba(255,255,255,0.04)] border border-[rgba(201,168,76,0.12)] p-4 sm:p-6"
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   <div className="text-[#C9A84C] mt-0.5">{s.IconEl}</div>
                   <div>
-                    <p className="font-serif text-[32px] font-light text-[#F5F0E8] leading-none">
+                    <p className="font-serif text-[24px] sm:text-[32px] font-light text-[#F5F0E8] leading-none">
                       {s.val}
                     </p>
-                    <p className="text-[11px] tracking-[1px] text-[#9A9080] mt-1">{s.label}</p>
-                    <p className="text-[10px] text-[#9A9080]/60 mt-0.5 tracking-[0.5px]">{s.sub}</p>
+                    <p className="text-[10px] sm:text-[11px] tracking-[1px] text-[#9A9080] mt-1">{s.label}</p>
+                    <p className="text-[9px] sm:text-[10px] text-[#9A9080]/60 mt-0.5 tracking-[0.5px]">{s.sub}</p>
                   </div>
                 </div>
               </div>
@@ -222,7 +260,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Main grid */}
-          <div className="grid grid-cols-[1fr_280px] gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-4 mb-4">
             {/* Reservations */}
             <div className="bg-[rgba(255,255,255,0.03)] border border-[rgba(201,168,76,0.1)] p-6">
               <div className="flex justify-between items-center mb-5">
@@ -317,7 +355,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Reserve CTA banner */}
-          <div className="relative overflow-hidden bg-[rgba(255,255,255,0.03)] border border-[rgba(201,168,76,0.15)] p-8 flex items-center gap-8">
+          <div className="relative overflow-hidden bg-[rgba(255,255,255,0.03)] border border-[rgba(201,168,76,0.15)] p-5 sm:p-8 flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-8">
             <div className="flex-shrink-0 max-w-xs">
               <p className="text-[10px] tracking-[3px] text-[#C9A84C] uppercase font-semibold mb-2">
                 Réserver un véhicule
@@ -336,9 +374,9 @@ export default function DashboardPage() {
               </Link>
             </div>
             {/* Car thumbnails */}
-            <div className="flex items-end gap-2 overflow-hidden flex-1 justify-end">
+            <div className="flex items-end gap-2 overflow-x-auto md:overflow-hidden flex-1 w-full md:justify-end">
               {cars.map((car) => (
-                <div key={car.id} className="relative h-28 w-40 flex-shrink-0">
+                <div key={car.id} className="relative h-20 w-28 sm:h-28 sm:w-40 flex-shrink-0">
                   <Image
                     src={car.studioImage}
                     alt={car.model}

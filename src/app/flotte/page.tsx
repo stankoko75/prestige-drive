@@ -46,12 +46,12 @@ export default function FlottePage() {
 
   return (
     <>
-      <main className="bg-[#0A0A0A] h-screen overflow-hidden flex flex-col">
+      <main className="bg-[#0A0A0A] min-h-screen md:h-screen md:overflow-hidden flex flex-col">
         <Navbar transparent={false} />
 
-        <div className="flex overflow-hidden" style={{ height: "calc(100vh - 84px)", marginTop: "84px" }}>
+        <div className="flex flex-col md:flex-row md:overflow-hidden mt-[68px] md:mt-[84px] h-auto md:h-[calc(100vh-84px)]">
           {/* ─── SIDEBAR GAUCHE ─── */}
-          <aside className="w-[265px] flex-shrink-0 bg-[#0D0D0D] border-r border-[rgba(201,168,76,0.1)] flex flex-col overflow-y-auto">
+          <aside className="order-2 md:order-1 w-full md:w-[265px] md:flex-shrink-0 bg-[#0D0D0D] border-b md:border-b-0 md:border-r border-[rgba(201,168,76,0.1)] flex flex-col md:overflow-y-auto">
             <div className="px-6 py-5 border-b border-[rgba(201,168,76,0.1)]">
               <p className="text-[10px] tracking-[3px] font-semibold text-[#F5F0E8] uppercase">
                 Sélectionnez votre véhicule
@@ -140,13 +140,13 @@ export default function FlottePage() {
           </aside>
 
           {/* ─── CONTENU PRINCIPAL ─── */}
-          <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <div className="order-1 md:order-2 flex-1 flex flex-col md:overflow-hidden min-h-0">
 
             {/* Zone image + panneau droit */}
-            <div className="flex flex-1 overflow-hidden min-h-0">
+            <div className="flex flex-col md:flex-row flex-1 md:overflow-hidden min-h-0">
 
               {/* Image véhicule */}
-              <div className="flex-1 relative overflow-hidden bg-[#080808]">
+              <div className="relative h-[300px] sm:h-[380px] md:h-auto md:flex-1 overflow-hidden bg-[#080808]">
                 <Image
                   key={selectedCar.id}
                   src={selectedCar.studioImage}
@@ -158,7 +158,7 @@ export default function FlottePage() {
               </div>
 
               {/* ─── PANNEAU DROIT ─── */}
-              <aside className="w-[295px] flex-shrink-0 bg-[rgba(13,13,13,0.97)] border-l border-[rgba(201,168,76,0.1)] flex flex-col overflow-y-auto">
+              <aside className="w-full md:w-[295px] md:flex-shrink-0 bg-[rgba(13,13,13,0.97)] border-t md:border-t-0 md:border-l border-[rgba(201,168,76,0.1)] flex flex-col md:overflow-y-auto">
 
                 {/* À propos */}
                 <div className="p-6 border-b border-[rgba(201,168,76,0.1)]">
@@ -259,7 +259,7 @@ export default function FlottePage() {
                   </svg>
                 </button>
               </div>
-              <div className="flex overflow-x-auto" style={{ height: "95px" }}>
+              <div className="flex overflow-x-auto h-[80px] sm:h-[95px]">
                 {filtered.length > 0 ? (
                   filtered.map((car) => {
                     const active = selectedCar.id === car.id;
@@ -267,8 +267,7 @@ export default function FlottePage() {
                       <button
                         key={car.id}
                         onClick={() => setSelectedCar(car)}
-                        className="relative flex-shrink-0 overflow-hidden border-0 outline-none cursor-pointer group"
-                        style={{ width: "185px", height: "95px" }}
+                        className="relative flex-shrink-0 overflow-hidden border-0 outline-none cursor-pointer group w-[150px] h-[80px] sm:w-[185px] sm:h-[95px]"
                       >
                         <Image
                           src={car.studioImage}
@@ -307,7 +306,7 @@ export default function FlottePage() {
         </div>
 
         {/* ─── BANDE INFOS PLEINE LARGEUR ─── */}
-        <div className="flex-shrink-0 grid grid-cols-4 bg-[rgba(10,10,10,0.97)] border-t border-[rgba(201,168,76,0.2)]">
+        <div className="flex-shrink-0 grid grid-cols-2 md:grid-cols-4 bg-[rgba(10,10,10,0.97)] border-t border-[rgba(201,168,76,0.2)]">
           {[
             {
               icon: (
@@ -350,7 +349,9 @@ export default function FlottePage() {
           ].map((item, i) => (
             <div
               key={i}
-              className={`flex items-center gap-3 px-5 py-4 ${i < 3 ? "border-r border-[rgba(201,168,76,0.1)]" : ""}`}
+              className={`flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 border-[rgba(201,168,76,0.1)] ${
+                i < 2 ? "border-b md:border-b-0" : ""
+              } ${i % 2 === 0 ? "border-r" : ""} ${i < 3 ? "md:border-r" : "md:border-r-0"}`}
             >
               {item.icon}
               <div>

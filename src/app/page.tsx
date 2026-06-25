@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 
 export default function HomePage() {
@@ -56,23 +57,46 @@ export default function HomePage() {
       {videoEnded && (
         <>
           <Navbar transparent={false} />
-          <section className="relative h-screen min-h-[700px] flex flex-col animate-fade-in">
+          <section className="relative h-screen min-h-[600px] flex flex-col animate-fade-in">
             {/* Background : image statique */}
             <div className="absolute inset-0 z-0">
               <Image
                 src="/images/homepage.png"
                 alt="Prestige Drive"
                 fill
-                className="object-cover"
+                className="object-cover blur-2xl scale-110"
                 priority
               />
+              <div className="absolute inset-0 bg-black/80" />
             </div>
 
-            {/* Zone centrale vide — le texte est déjà intégré à la photo */}
-            <div className="flex-1" />
+            {/* Contenu central : titre, sous-titre, CTA (responsive, ne dépend pas du texte intégré à la photo) */}
+            <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8">
+              <h1 className="font-serif text-[clamp(26px,6.5vw,56px)] font-light uppercase tracking-[1.5px] sm:tracking-[3px] text-[#F5F0E8] leading-[1.2] max-w-3xl">
+                L&apos;exception, au-delà de l&apos;ordinaire
+              </h1>
+              <div className="w-10 h-px bg-[#C9A84C] my-5" />
+              <p className="text-[12px] sm:text-[13px] text-[#9A9080] leading-[1.8] max-w-md">
+                Des expériences sur-mesure avec les véhicules les plus prestigieux. Chaque détail. Parfaitement maîtrisé.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 mt-8 w-full sm:w-auto max-w-[280px] sm:max-w-none">
+                <Link
+                  href="/flotte"
+                  className="bg-[#C9A84C] text-black px-8 py-3.5 text-[10px] tracking-[2.5px] font-bold uppercase hover:bg-[#E8C97A] transition-colors no-underline text-center"
+                >
+                  Découvrir notre flotte
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="border border-[rgba(245,240,232,0.4)] text-[#F5F0E8] px-8 py-3.5 text-[10px] tracking-[2.5px] font-semibold uppercase hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors no-underline text-center"
+                >
+                  Mes réservations
+                </Link>
+              </div>
+            </div>
 
             {/* Bande bas */}
-            <div className="relative z-10 grid grid-cols-4 bg-[rgba(10,10,10,0.93)] border-t border-[rgba(201,168,76,0.25)]">
+            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 bg-[rgba(10,10,10,0.93)] border-t border-[rgba(201,168,76,0.25)]">
               {[
                 {
                   icon: (
@@ -115,12 +139,14 @@ export default function HomePage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`flex items-center gap-4 px-8 py-7 ${i < 3 ? "border-r border-[rgba(201,168,76,0.12)]" : ""}`}
+                  className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-6 md:px-8 py-4 md:py-7 border-[rgba(201,168,76,0.12)] ${
+                    i < 2 ? "border-b md:border-b-0" : ""
+                  } ${i % 2 === 0 ? "border-r" : ""} ${i < 3 ? "md:border-r" : "md:border-r-0"}`}
                 >
                   {item.icon}
                   <div>
-                    <p className="text-[11px] tracking-[2px] font-semibold text-[#C9A84C] uppercase mb-1">{item.title}</p>
-                    <p className="text-[11px] text-[#9A9080] tracking-[0.5px]">{item.sub}</p>
+                    <p className="text-[10px] sm:text-[11px] tracking-[1px] sm:tracking-[2px] font-semibold text-[#C9A84C] uppercase mb-1">{item.title}</p>
+                    <p className="text-[10px] sm:text-[11px] text-[#9A9080] tracking-[0.5px]">{item.sub}</p>
                   </div>
                 </div>
               ))}
