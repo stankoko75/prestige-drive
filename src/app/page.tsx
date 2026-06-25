@@ -6,10 +6,20 @@ import Navbar from "@/components/layout/Navbar";
 
 export default function HomePage() {
   const [videoEnded, setVideoEnded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    setMounted(true);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
     const fallback = setTimeout(() => setVideoEnded(true), 30000);
-    return () => clearTimeout(fallback);
+    return () => {
+      mq.removeEventListener("change", onChange);
+      clearTimeout(fallback);
+    };
   }, []);
 
   return (
@@ -17,16 +27,19 @@ export default function HomePage() {
       {/* ─── INTRO VIDEO (plein écran, sans UI) ─── */}
       {!videoEnded && (
         <div className="fixed inset-0 z-[100] bg-black">
-          <video
-            autoPlay
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-            onEnded={() => setVideoEnded(true)}
-            onError={() => setVideoEnded(true)}
-          >
-            <source src="/videos/intro.mp4" type="video/mp4" />
-          </video>
+          {mounted && (
+            <video
+              key={isMobile ? "mobile" : "desktop"}
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              onEnded={() => setVideoEnded(true)}
+              onError={() => setVideoEnded(true)}
+            >
+              <source src={isMobile ? "/videos/intro-mobile.mp4" : "/videos/intro.mp4"} type="video/mp4" />
+            </video>
+          )}
           <button
             onClick={() => setVideoEnded(true)}
             className="absolute bottom-10 right-10 flex items-center gap-2 bg-transparent border-none cursor-pointer text-[rgba(245,240,232,0.45)] hover:text-[#C9A84C] transition-colors"
