@@ -58,16 +58,18 @@ export default function HomePage() {
         <>
           <Navbar transparent={false} />
           <section className="relative h-screen min-h-[600px] flex flex-col animate-fade-in">
-            {/* Background : image statique */}
+            {/* Background : image pré-floutée côté serveur (le texte d'origine y est
+                déjà illisible) — évite de charger l'image source 4K + un filtre CSS
+                coûteux côté client, qui pouvait rester invisible le temps de calculer. */}
             <div className="absolute inset-0 z-0">
               <Image
-                src="/images/homepage.png"
+                src="/images/homepage-hero-bg.jpg"
                 alt="Prestige Drive"
                 fill
-                className="object-cover blur-2xl scale-110"
+                className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-black/80" />
+              <div className="absolute inset-0 bg-black/55" />
             </div>
 
             {/* Contenu central : titre, sous-titre, CTA (responsive, ne dépend pas du texte intégré à la photo) */}
