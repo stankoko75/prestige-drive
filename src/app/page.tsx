@@ -34,7 +34,7 @@ export default function HomePage() {
             autoPlay
             muted
             playsInline
-            poster="/images/homepage.png"
+            poster={isMobile ? "/images/intro-mobile-poster.jpg" : "/images/intro-poster.jpg"}
             className="w-full h-full object-cover"
             onEnded={() => setVideoEnded(true)}
             onError={() => setVideoEnded(true)}
