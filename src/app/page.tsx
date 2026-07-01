@@ -58,6 +58,8 @@ export default function HomePage() {
         <>
           <Navbar transparent={false} />
           <section className="relative h-screen min-h-[600px] flex flex-col animate-fade-in">
+            {/* Photo pleine résolution, aucun overlay — le contenu (titre, sous-titre,
+                CTA) est déjà intégré dans les pixels de l'image. */}
             <div className="absolute inset-0 z-0">
               <Image
                 src="/images/homepage.png"
@@ -67,32 +69,43 @@ export default function HomePage() {
                 priority
                 sizes="100vw"
               />
-              <div className="absolute inset-0 bg-black/60" />
             </div>
 
-            {/* Contenu central : titre, sous-titre, CTA (responsive, ne dépend pas du texte intégré à la photo) */}
-            <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8">
-              <h1 className="font-serif text-[clamp(26px,6.5vw,56px)] font-light uppercase tracking-[1.5px] sm:tracking-[3px] text-[#F5F0E8] leading-[1.2] max-w-3xl">
-                L&apos;exception, au-delà de l&apos;ordinaire
-              </h1>
-              <div className="w-10 h-px bg-[#C9A84C] my-5" />
-              <p className="text-[12px] sm:text-[13px] text-[#9A9080] leading-[1.8] max-w-md">
-                Des expériences sur-mesure avec les véhicules les plus prestigieux. Chaque détail. Parfaitement maîtrisé.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 mt-8 w-full sm:w-auto max-w-[280px] sm:max-w-none">
-                <Link
-                  href="/flotte"
-                  className="bg-[#C9A84C] text-black px-8 py-3.5 text-[10px] tracking-[2.5px] font-bold uppercase hover:bg-[#E8C97A] transition-colors no-underline text-center"
-                >
-                  Découvrir notre flotte
-                </Link>
-                <Link
-                  href="/dashboard"
-                  className="border border-[rgba(245,240,232,0.4)] text-[#F5F0E8] px-8 py-3.5 text-[10px] tracking-[2.5px] font-semibold uppercase hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors no-underline text-center"
-                >
-                  Mes réservations
-                </Link>
-              </div>
+            {/* Desktop : zones transparentes cliquables positionnées exactement sur
+                les CTAs baked dans l'image (mesurés sur rendu réel 1440×900). */}
+            <div className="hidden md:block absolute inset-0 z-10">
+              <Link
+                href="/flotte"
+                aria-label="Découvrir notre flotte"
+                className="absolute cursor-pointer hover:brightness-110 transition-all"
+                style={{ top: "74%", left: "24%", width: "23.5%", height: "7%" }}
+              />
+              <Link
+                href="/dashboard"
+                aria-label="Mes réservations"
+                className="absolute cursor-pointer hover:brightness-110 transition-all"
+                style={{ top: "74%", left: "49%", width: "21%", height: "7%" }}
+              />
+            </div>
+
+            {/* Spacer desktop (pousse la bande bas en bas) */}
+            <div className="hidden md:block flex-1" />
+
+            {/* Mobile : la photo est recadrée et les CTA de l'image sont hors champ,
+                on affiche des vrais boutons visibles. */}
+            <div className="md:hidden relative z-10 flex-1 flex flex-col items-center justify-end pb-28 px-5 gap-3">
+              <Link
+                href="/flotte"
+                className="bg-[#C9A84C] text-black px-8 py-3.5 text-[10px] tracking-[2.5px] font-bold uppercase no-underline text-center w-full max-w-[280px] hover:bg-[#E8C97A] transition-colors"
+              >
+                Découvrir notre flotte
+              </Link>
+              <Link
+                href="/dashboard"
+                className="border border-[rgba(245,240,232,0.5)] text-[#F5F0E8] px-8 py-3.5 text-[10px] tracking-[2.5px] font-semibold uppercase no-underline text-center w-full max-w-[280px] hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
+              >
+                Mes réservations
+              </Link>
             </div>
 
             {/* Bande bas */}
